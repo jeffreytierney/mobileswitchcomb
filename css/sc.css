@@ -1,16 +1,303 @@
-* {
-  margin: 0;
-  padding: 0;
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 body {
   background-color: #FFF;
+  font-size: 62.5%;
+  font-family: helvetica, verdana, arial, sans-serif;
 }
 
-#header img {
+/* need to add */
+.clearfix:after{
+	content: ".";
+	display: block;
+	height:0;
+	line-height: 0;
+	clear:both;
+	visibility: hidden;
+}
+/* Hides from IE-mac\*/
+* html .clearfix {height: 1%;}
+/*End hide from IE-mac */
+
+a {
+  text-decoration: none;
+}
+
+#header {
   width: 100%;
 }
 
+#header_home {
+  display: block;
+  height: 51px;
+  width 100%;
+  text-align: center;
+  padding-bottom: 5px;
+}
+#header_home img {
+  max-width: 289px;
+}
+
+#loggedin {
+  width: 100%;
+  text-align: right;
+  height: 2.5em;
+  line-height: 2.5em;
+  border: 1px solid #000;
+  border-width: 1px 0;
+}
+#loggedin span, #loggedin a {
+  font-size: 1.4em;
+}
+
+#header_links {
+  width: 100%;
+  height: 2.5em;
+  line-height: 2.5em;
+  border-bottom: 1px solid #000;
+}
+
+#header_links li{
+  float: left;
+  width: 33.3%;
+}
+
+#header_links li a {
+  display: block;
+  text-align: center;
+  font-size: 1.4em;
+  
+}
+
+
 img, object {
   max-width: 100%;
+}
+
+h1 {
+  font-size: 2em;
+  padding: .2em 0 .3em;
+  line-height: 1em;
+  height: 1em;
+}
+
+#pagecontainer {
+  width: 96%;
+  padding: .2em 2% 2em;
+}
+
+.util_links {
+  width: 100%;
+	height: 1.3em;
+	line-height: 1.3em;
+  1margin-bottom: .2em;
+  padding-bottom: .2em;
+  border-bottom: .1em solid #000;
+}
+
+.util_links li {
+  float: left;
+  margin-left: 1.5em;
+}
+
+.util_links li:first-child {
+  margin-left: 0;
+}
+
+
+.util_links li a{
+  display: block;
+  font-size: 1.3em;
+}
+
+#board_header {
+  display: none;
+}
+
+.boarditem {
+  width: 100%;
+  position: relative;
+  border-top: .1em dashed #A9A9A9;
+  padding: .2em 0;
+  display: block;
+  color: #000;
+}
+
+.boarditem:first-child {
+  border-width: 0px;
+}
+
+.boarditem.new {
+  background-color: #A4EBB6;
+}
+
+
+.boarditem .board_threadname {
+  width: 95%;
+}
+
+.boarditem .board_threadname {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 1.4em;
+  line-height: 1.4em;
+  font-size: 1.2em;
+  color: #345678;
+}
+.boarditem .board_threadreplies {
+  width: 5%;
+  display: block;
+  position: absolute;
+  top: .2em;
+  right: 0em;
+  height: 1.4em;
+  line-height: 1.4em;
+  font-size: 1.2em;
+  text-align: right;
+}
+
+.boarditem .board_threadcreatedby, .boarditem .board_threadcreatedate {
+  display: block;
+  width: 49%;
+  height: 1.2em;
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
+
+.boarditem .board_threadcreatedate {
+  position: absolute;
+  top: 1.6em;
+  right: 0em;
+  text-align: right;
+}
+
+.message {
+  width: 100%;
+  position: relative;
+  padding: .2em 0 1.5em;
+  border-top: .1em dashed #A9A9A9;
+  height: auto;
+}
+
+.message:first-child {
+  border-width: 0px;
+}
+
+.message .message_options, .message .message_content .message_info {
+  position: absolute;
+  height: 1.5em;
+  line-height: 1.5em;
+}
+
+.message .message_options {
+  bottom: 0;
+  z-index: 10;
+  right: 0;
+}
+
+.message .message_options li {
+  float right;
+}
+
+
+.message .message_options li a{
+  display: block;
+  text-align: right;
+}
+
+.message .message_content {
+  width: 100%;
+  position: relative;
+  top: 0;
+  padding: 1.5em 0 0;
+}
+
+.message .message_content .message_info {
+  width: 100%;
+  top: 0;
+  color: #777;
+}
+
+
+.message .message_content .message_info .message_date, .message .message_content .message_info .message_source {
+  float: right;
+  margin-left: 1em;
+}
+
+.message .message_content .message_info .message_author{
+  float: left;
+  width: 40%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#loadmore {
+  display: none;
+}
+
+.sc_create_reply {
+  display: none;
+  width: 95%;
+}
+
+.sc_create_reply textarea{
+  width: 100%;
+}
+
+.loading {
+  display: none;
 }
