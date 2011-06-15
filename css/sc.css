@@ -77,6 +77,9 @@ a {
 
 #header {
   width: 100%;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #000; 
+  
 }
 
 #header_home {
@@ -85,36 +88,34 @@ a {
   width 100%;
   text-align: center;
   padding-bottom: 5px;
-}
-#header_home img {
-  max-width: 289px;
+  background: transparent url(/images/logo.png) no-repeat scroll center 0;
+  text-indent: -9999px;
+  margin: 5px 0; 
 }
 
 #loggedin {
   width: 100%;
   text-align: right;
-  height: 2.5em;
-  line-height: 2.5em;
-  border: 1px solid #000;
+  line-height: 3em;
+  border-top: 1px solid #000;
   border-width: 1px 0;
 }
 #loggedin span, #loggedin a {
   font-size: 1.4em;
 }
 
-#header_links {
+#links {
   width: 100%;
-  height: 2.5em;
-  line-height: 2.5em;
-  border-bottom: 1px solid #000;
+  line-height: 3em;
+  border-top: 1px solid #000;
 }
 
-#header_links li{
+#links li{
   float: left;
   width: 33.3%;
 }
 
-#header_links li a {
+#links li a {
   display: block;
   text-align: center;
   font-size: 1.4em;
@@ -122,15 +123,15 @@ a {
 }
 
 
-img, object {
+* {
   max-width: 100%;
 }
 
+
 h1 {
   font-size: 2em;
-  padding: .2em 0 .3em;
+  padding: 0 0 .3em;
   line-height: 1em;
-  height: 1em;
 }
 
 #pagecontainer {
@@ -203,7 +204,7 @@ h1 {
   display: block;
   position: absolute;
   top: .2em;
-  right: 0em;
+  right: 0;
   height: 1.4em;
   line-height: 1.4em;
   font-size: 1.2em;
@@ -228,7 +229,7 @@ h1 {
 .message {
   width: 100%;
   position: relative;
-  padding: .2em 0 1.5em;
+  padding: .2em 0 2em;
   border-top: .1em dashed #A9A9A9;
   height: auto;
 }
@@ -239,7 +240,7 @@ h1 {
 
 .message .message_options, .message .message_content .message_info {
   position: absolute;
-  height: 1.5em;
+  height: 2em;
   line-height: 1.5em;
 }
 
@@ -257,6 +258,8 @@ h1 {
 .message .message_options li a{
   display: block;
   text-align: right;
+  font-size: 1.2em;
+  padding: .2em;
 }
 
 .message .message_content {
