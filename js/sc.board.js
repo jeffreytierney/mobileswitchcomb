@@ -119,11 +119,11 @@ SC.Notifier.prototype = {
         }
       }
       //if(!found_board) {
-        
+
         if(data.msg_count === 0) {
           var message = "New Thread ("+data.threadsubject+") Created in ";
           message += (found_board ? "this board" : "Board " + data.boardname);
-          
+
           _this.notification_center.addNotification({
             message: message,
             id: data.boardid + "_"+ data.threadid
@@ -179,7 +179,7 @@ SC.NotificationCenter.prototype = {
     this.badge_el_count = $(document.createElement("span")).attr("id", "notification_badge_count");
     this.badge_el.append(this.badge_el_count);
     this.el.prepend(this.badge_el);
-    
+
     var _this = this;
     SC.CustomEvents.listen("sc_notification_center_update", function(data) {
       _this.badge_el_count.html(data.length);
@@ -190,7 +190,7 @@ SC.NotificationCenter.prototype = {
         _this.badge_el.hide();
       }
     });
-    
+
     this.badge_el.bind("click", function() {
       _this.showAllNotifications();
       return false;
@@ -208,7 +208,7 @@ SC.NotificationCenter.prototype = {
     }
   },
   addNotification: function(message_obj) {
-    
+
     if(message_obj.hasOwnProperty("id") && this.notifications_by_id.hasOwnProperty(message_obj.id)) {
       this.notifications[this.notifications_by_id[message_obj.id]].update(message_obj);
     }
@@ -275,7 +275,7 @@ SC.Notification.prototype = {
       return false;
     });
     this.setCloseTimer();
-    
+
     return this;
   },
   setCloseTimer: function() {
@@ -389,18 +389,18 @@ SC.Board.prototype = {
         _this.loadThreads();
       }
     });
-    
+
     SC.CustomEvents.listen(this.post_callback_event, function(data) {
       if(data && data.transfer) {
         location.href=data.transfer;
       }
     });
-    
+
     this.els.create_thread_link.bind("click", function() {
       _this.create_thread_form.show();
       return false;
     });
-    
+
     return this;
   },
   checkSetNewest: function(threadid) {
@@ -506,16 +506,16 @@ SC.Thread.prototype = {
         _this.showLoadMore(count);
       }
     });
-    
+
     SC.CustomEvents.listen(this.post_callback_event, function() {
       _this.loadmore_link.click();
     });
-    
+
     this.loadmore_link.bind("click", function() {
       _this.loadMessages();
       return false;
     });
-    
+
     this.els.messageListContainer.bind('click', function(e) {
       if($(e.target).hasClass("reply_link")) {
         _this.reply_form.show();
@@ -582,14 +582,20 @@ SC.ReplyCreateForm.prototype = {
   },
   cacheElements: function() {
     this.form = this.el.find("form");
-    this.text = this.form.find("textarea");
+    this.text = this.form.find("#message_create_text");
+    this.subject = this.form.find("#message_create_subject");
     this.submit = this.form.find("input#btn_create");
+    this.create_link_types = this.form.find("#create_link_types");
+    this.message_create_type = this.form.find("#message_create_type");
+    this.buttons_fieldset = this.form.find(".buttons");
     return this;
   },
   insertElements: function() {
     this.loading = $(document.createElement("span")).addClass("loading").addClass("small").html("Posting...");
-    this.cancel = $(document.createElement("input")).attr("type", "button").attr("id", "btn_cancel").val("Cancel");
-    this.form.append(this.loading).append(this.cancel);
+    this.cancel = $(document.createElement("input")).attr("type", "button").attr("id", "btn_cancel").val("Cancel").addClass("button");;
+    this.json = $(document.createElement("input")).attr("type", "hidden").attr("name", "__content_type").val("json");
+    this.form.append(this.loading).append(this.json);
+    this.buttons_fieldset.append(this.cancel);
     return this;
   },
   bindEvents: function() {
@@ -599,10 +605,21 @@ SC.ReplyCreateForm.prototype = {
       _this.cancel.hide();
       _this.loading.show();
       _this.post();
-      _this.form.find("input, textarea").attr("disabled","true");
+      //_this.form.find("input, textarea").attr("disabled","true");
       return false;
     });
-    
+
+    this.create_link_types.bind("click", function(e) {
+      var target = $(e.target);
+      if(target.hasClass("type_link")) {
+        var type = target.attr("id").split("_")[1];
+        _this.setNewType(type);
+        target.closest("ul").find(".active").removeClass("active");
+        target.addClass("active");
+      }
+      return false;
+    });
+
     this.cancel.bind("click", function() {
       _this.hide();
       return false;
@@ -623,7 +640,7 @@ SC.ReplyCreateForm.prototype = {
   },
   createEl: function(data, dont_show) {
     if(data && data.content) {
-      this.el = $(document.createElement("div")).attr("id", this.el_id).addClass("sc_create_reply");
+      this.el = $(document.createElement("div")).attr("id", this.el_id).addClass("sc_create_reply").addClass("rnd").addClass("bshd");;
       this.el.append(data.content);
       $("body").append(this.el);
       this.cacheElements().insertElements().bindEvents();
@@ -655,8 +672,11 @@ SC.ReplyCreateForm.prototype = {
         _this.submit.show();
         _this.cancel.show();
         _this.loading.hide();
-        _this.form.find("input, textarea").attr("disabled",null);
+        //_this.form.find("input, textarea").attr("disabled",null);
+        _this.setNewType();
         _this.form.get(0).reset();
+        _this.create_link_types.find(".active").removeClass("active");
+        _this.create_link_types.find("li:first a").addClass("active");
       });
     }
     return this;
@@ -680,15 +700,28 @@ SC.ReplyCreateForm.prototype = {
       SC.CustomEvents.fire(this.custom_event, data);
     }
     this.hide();
-    
+
     return this;
   },
   postError: function(xhr) {
     alert(xhr.reponsetext);
     this.hide();
     return this;
+  },
+  setNewType: function(type) {
+    type = type || "text";
+    var message = this.text.val();
+    var subject = this.subject.val();
+
+    this.form.attr("class", type);
+    this.form.get(0).reset();
+
+    this.text.val(message);
+    this.subject.val(subject);
+    this.message_create_type.val(type);
+    return this;
   }
-  
+
 }
 
 SC.util.acceptsHooks(SC.ReplyCreateForm);
@@ -699,7 +732,7 @@ $(function() {
     SC.data.threads = [];
     $(".board").each(function(i, val) { SC.data.boards.push(new SC.Board(val));});
     $(".thread").each(function(i, val) { SC.data.threads.push(new SC.Thread(val));});
-    
+
     SC.data.notifier = new SC.Notifier(new SC.NotificationCenter("#notifier", true));
     SC.data.updater = new SC.Updater();
   }
