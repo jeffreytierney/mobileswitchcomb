@@ -297,6 +297,8 @@ h1 {
   width: 95%;
   padding: 2.5%;
   position: absolute;
+  background: #FFF;
+  z-index: 9999;
 }
 
 .loading {
