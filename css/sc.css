@@ -296,6 +296,7 @@ h1 {
   display: none;
   width: 95%;
   padding: 2.5%;
+  position: absolute;
 }
 
 .loading {
