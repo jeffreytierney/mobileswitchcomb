@@ -661,9 +661,9 @@ SC.ReplyCreateForm.prototype = {
     else {
       this.loadEl();
     }
+    this.el.css({top:$(document.body).scrollTop()+20});
     this.text.focus();
     this.callHook("sc_replyform_show");
-    this.el.css({top:$(document.body).scrollTop()+20});
     return this;
   },
   hide: function() {
